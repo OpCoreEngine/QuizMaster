@@ -1,0 +1,55 @@
+services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:6.0
+    container_name: quizmaster-mongo
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password123
+      MONGO_INITDB_DATABASE: quizmaster
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    networks:
+      - quizmaster-network
+
+  # QuizMaster Application (Frontend + Backend)
+  quizmaster-app:
+    build: .
+    container_name: quizmaster-app
+    restart: unless-stopped
+    ports:
+      - "5001:5001"
+    environment:
+      # Database Configuration
+      MONGO_URI: mongodb://quizuser:quizpass@mongodb:27017/quizmaster
+      
+      # JWT Configuration
+      JWT_SECRET: your-super-secret-jwt-key-change-this-in-production
+      
+      # Server Configuration
+      PORT: 5001
+      NODE_ENV: production
+      
+      # Email Configuration (optional - update with your credentials)
+      EMAIL_USER: your-email@example.com
+      EMAIL_PASSWORD: your-email-password
+      
+      # Frontend URL for CORS
+      FRONTEND_URL: http://localhost:5001
+    depends_on:
+      - mongodb
+    networks:
+      - quizmaster-network
+    volumes:
+      - ./logs:/app/logs
+
+volumes:
+  mongodb_data:
+
+networks:
+  quizmaster-network:
+    driver: bridge 

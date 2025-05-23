@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const Quiz = require('./models/Quiz');
 
 const QuizResult = require('./models/QuizResult');
@@ -89,10 +90,21 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+// API routes
 app.use('/api/users', userRouter);
 app.use('/api/quizzes', quizRouter);
 
-app.use('/', (req, res) => res.send('Hello World!'));
+// Serve static files from React build
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Catch-all handler: send back React's index.html file for any non-API routes
+app.get('*', (req, res) => {
+    // Don't serve index.html for API routes
+    if (req.path.startsWith('/api/')) {
+        return res.status(404).json({ message: 'API endpoint not found' });
+    }
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 const PORT = process.env.PORT || 5000;
 //print req res status
