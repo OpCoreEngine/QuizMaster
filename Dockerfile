@@ -38,7 +38,7 @@ COPY --from=frontend-build /app/frontend/build ./public
 RUN mkdir -p logs
 
 # Expose port
-EXPOSE 5000
+EXPOSE 5001
 
 # Start the application
 CMD ["npm", "start"] 

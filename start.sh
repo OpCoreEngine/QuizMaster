@@ -66,11 +66,11 @@ esac
 echo "🧹 Eski konteynerleri temizleniyor..."
 docker compose down 2>/dev/null
 
-# Port 5000'in boş olup olmadığını kontrol et
-echo "🔌 Port 5000 kontrol ediliyor..."
+# Port 5001'in boş olup olmadığını kontrol et
+echo "🔌 Port 5001 kontrol ediliyor..."
 if command -v lsof &> /dev/null; then
-    if lsof -i:5000 &>/dev/null; then
-        echo "⚠️  Port 5000 kullanılıyor. Başka bir uygulamayı kapatmanız gerekebilir."
+    if lsof -i:5001 &>/dev/null; then
+        echo "⚠️  Port 5001 kullanılıyor. Başka bir uygulamayı kapatmanız gerekebilir."
         read -p "Devam etmek istiyor musunuz? (y/N): " -n 1 -r
         echo
         if [[ ! $REPLY =~ ^[Yy]$ ]]; then
@@ -96,7 +96,7 @@ if [ $? -eq 0 ]; then
         echo ""
         echo "🎉 QuizMaster başarıyla başlatıldı!"
         echo "======================================="
-        echo "📱 Uygulama: http://localhost:5000"
+        echo "📱 Uygulama: http://localhost:5001"
         echo "🗄️  MongoDB: localhost:27017"
         echo ""
         echo "📋 Yararlı komutlar:"
@@ -115,16 +115,16 @@ if [ $? -eq 0 ]; then
         # Sağlık kontrolü
         echo "🏥 Sağlık kontrolü yapılıyor..."
         if command -v curl &> /dev/null; then
-            if curl -f http://localhost:5000 &>/dev/null; then
+            if curl -f http://localhost:5001 &>/dev/null; then
                 echo "✅ Uygulama başarıyla çalışıyor!"
-                echo "🌐 Tarayıcınızda http://localhost:5000 adresini açın"
+                echo "🌐 Tarayıcınızda http://localhost:5001 adresini açın"
             else
                 echo "⚠️  Uygulama henüz tam olarak başlamadı. Birkaç dakika daha bekleyin."
                 echo "📋 Logları kontrol etmek için: docker compose logs -f"
             fi
         else
             echo "ℹ️  curl komutu bulunamadı, sağlık kontrolü atlanıyor."
-            echo "🌐 Tarayıcınızda http://localhost:5000 adresini açın"
+            echo "🌐 Tarayıcınızda http://localhost:5001 adresini açın"
         fi
         
     else
