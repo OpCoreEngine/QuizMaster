@@ -17,8 +17,13 @@ const register = async (req, res) => {
   const { username, email, password } = zodResult.data;
 
   try {
+    // Check if email already exists
     let user = await User.findOne({ email });
     if (user) return res.status(400).json({ msg: 'User already exists' });
+
+    // Check if username already exists
+    user = await User.findOne({ username });
+    if (user) return res.status(400).json({ msg: 'Username already exists' });
 
     user = new User({ username, email, password });
 
@@ -41,7 +46,18 @@ const register = async (req, res) => {
       }
     );
   } catch (error) {
-    console.error(err);
+    console.error(error);
+    
+    // Handle MongoDB duplicate key errors
+    if (error.code === 11000) {
+      if (error.keyPattern && error.keyPattern.email) {
+        return res.status(400).json({ msg: 'User already exists' });
+      }
+      if (error.keyPattern && error.keyPattern.username) {
+        return res.status(400).json({ msg: 'Username already exists' });
+      }
+    }
+    
     res.status(500).json({ msg: 'Server error' });
   }
 };
@@ -165,10 +181,6 @@ const updatePassword = async (req, res) => {
     res.status(500).json({ msg: 'Server error' });
   }
 };
-
-
-
-
 
 const me = async (req, res) => {
   try {

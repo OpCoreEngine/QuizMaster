@@ -5,17 +5,11 @@ QuizMaster is a comprehensive quiz application that allows users to create, take
 ## Table of Contents
 
 - [Features](#features)
-- [Folder Structure](#folder-structure)
-- [Backend](#backend)
-  - [Description](#description)
-  - [Routes](#routes)
-  - [Environment Variables](#environment-variables)
-  - [Setup](#backend-setup)
-- [Frontend](#frontend)
-  - [Description](#description-1)
-  - [Pages and Components](#pages-and-components)
-  - [Environment Variables](#environment-variables-1)
-  - [Setup](#frontend-setup)
+- [Quick Start with Docker](#quick-start-with-docker)
+- [Manual Installation](#manual-installation)
+  - [Folder Structure](#folder-structure)
+  - [Backend](#backend)
+  - [Frontend](#frontend)
 - [Contribution](#contribution)
 - [License](#license)
 - [Contact](#contact)
@@ -28,6 +22,47 @@ QuizMaster is a comprehensive quiz application that allows users to create, take
 - **Progress Tracking:** Save progress, auto-submit quizzes after time limit is reached
 - **Detailed Statistics:** View quiz results, detailed statistics, and ranking of users
 - **Responsive Design:** Ensures compatibility across various devices
+
+## Quick Start with Docker
+
+🚀 **Recommended for easy setup!** Run the entire application with a single command:
+
+### Prerequisites
+- Docker (with Docker Compose plugin)
+
+### Installation & Running
+
+1. **Clone the repository:**
+   ```bash
+   git clone <repository-url>
+   cd QuizMaster
+   ```
+
+2. **Run with our automated script:**
+   ```bash
+   ./start.sh
+   ```
+
+3. **Or manually run:**
+   ```bash
+   docker compose up --build
+   ```
+
+4. **Access the application:**
+   Open your browser and navigate to: **http://localhost:5000**
+
+### Docker Commands
+
+- **Start:** `docker compose up -d`
+- **Stop:** `docker compose down`
+- **View logs:** `docker compose logs -f`
+- **Rebuild:** `docker compose build --no-cache`
+
+For detailed Docker setup instructions, see [DOCKER_README.md](DOCKER_README.md)
+
+---
+
+## Manual Installation
 
 ## Folder Structure
 
@@ -83,10 +118,10 @@ QuizMaster
 │   │   │   ├── TestPage.js
 │   │   │   ├── UserScorestable.css
 │   │   │   ├── UserScorestable.js
-│   ├── .env
-│   ├── .gitignore
-│   ├── package-lock.json
-│   ├── package.json
+│   │   │   ├── .env
+│   │   │   ├── .gitignore
+│   │   │   ├── package-lock.json
+│   │   │   ├── package.json
 ```
 
 ## Backend
